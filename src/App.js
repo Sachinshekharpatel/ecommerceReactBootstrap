@@ -8,21 +8,37 @@ import Navbarheader from './Navbarheader';
 import AboutPage from './about';
 import HomePage from './Homepage';
 import CartModal from './cart';
+import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 import CartContext from './createContext';
 function App() {
+
+const navigation = createBrowserRouter([
+  {
+    path: "/",
+    element: <ShowList></ShowList>,
+  },
+  {
+    path: "aboutpage",
+    element: <AboutPage></AboutPage>,
+  },
+  {
+    path: "homepage",
+    element: <HomePage></HomePage>,
+  },
+
+])
+
  const cartCtx = useContext(CartContext);
   useEffect(() => {
     console.log(cartCtx.cartArray);
   },[cartCtx.cartArray])
   return (
-    <div className="App">
-      <Navbarheader></Navbarheader>
-      <ShowList></ShowList>
-      <Button  className='mt-4' variant='success' > See The Cart</Button>
-      {/* <AboutPage></AboutPage> */}
-      {/* <HomePage></HomePage> */}
-      <FooterPart></FooterPart>
-    </div>
+
+    <RouterProvider router={navigation}>
+      <div className="App">
+        <AboutPage></AboutPage>
+      </div>
+    </RouterProvider>
   );
 }
 

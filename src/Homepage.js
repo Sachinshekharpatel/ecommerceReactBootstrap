@@ -23,6 +23,7 @@ const HomePage = () => {
           </Nav>
         </Container>
       </Navbar>
+      <FooterPart></FooterPart>
     </>
   );
 };
