@@ -1,35 +1,19 @@
-import React from "react";
+import React,{useContext, useEffect} from "react";
 import { Button, Table } from "react-bootstrap";
-import "./CartModal.css"; // Import your CSS file
+import "./CartModal.css"; 
+
 
 const CartModal = (props) => {
-  const cartElements = [
-    {
-      title: "Colors",
-      price: 100,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-      quantity: 2,
-    },
-    {
-      title: "Black and white Colors",
-      price: 50,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-      quantity: 3,
-    },
-    {
-      title: "Yellow and Black Colors",
-      price: 70,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-      quantity: 1,
-    },
-  ];
+
+  const cartArrayCtx = props.cartArray;
+
+   useEffect(() => {
+    console.log(cartArrayCtx);
+   },[cartArrayCtx])
 
   return (
-    <>
-      (
+    <>   
+    <pre>{ console.log(cartArrayCtx)}</pre>
       <div className="modal-overlay" onClick={props.cartClosehandler}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <div className="modal-header">
@@ -43,7 +27,8 @@ const CartModal = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartElements.map((item, index) => (
+                 
+                  {cartArrayCtx.map((item, index) => (
                     <tr key={index}>
                       <td>
                         <img
@@ -64,7 +49,7 @@ const CartModal = (props) => {
                   ))}
                 </tbody>
               </Table>
-              <h1 className="cart-heading" style={{ marginTop: "20px",backgroundColor:'#f2f2f2',padding:'10px' }}>Total Price: Rs {cartElements.reduce((total, item) => total + item.price * item.quantity, 0)}</h1>
+              <h1 className="cart-heading" style={{ marginTop: "20px",backgroundColor:'#f2f2f2',padding:'10px' }}>Total Price: Rs {cartArrayCtx.reduce((total, item) => total + item.price*item.quantity , 0)}</h1>
               <Button
                 onClick={props.cartClosehandler}
                 variant="danger"
@@ -83,7 +68,6 @@ const CartModal = (props) => {
           </div>
         </div>
       </div>
-      )
     </>
   );
 };

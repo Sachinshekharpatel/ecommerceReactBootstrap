@@ -1,42 +1,23 @@
-import React from "react";
+import React,{useContext, useEffect} from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-
+import  CartContext from "./createContext";
 function ShowList() {
-  const productsArr = [
-    {
-      title: "Colors",
-      price: 100,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-    },
-    {
-      title: "Black and white Colors",
-      price: 50,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-    },
+  const productList = useContext(CartContext);
+  
+  useEffect(() => {
+      console.log(productList.cartArray);
+  },[productList.cartArray])
 
-    {
-      title: "Yellow and Black Colors",
-      price: 70,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-    },
-
-    {
-      title: "Blue Color",
-      price: 100,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-    },
-  ];
+ const addToCartHandler=(item,id)=>{
+    productList.addItemInCart(item,id);
+  }
 
   return (
     <>
       <h1 className="text-align-center" style={{ fontStyle: "italic" }}>Music</h1>
 
       <div className="d-flex justify-content-center ">
-        {productsArr.map((item, index) => {
+        {productList.listOfItem.map((item, index) => {
           return (
             <div className="p-4">
               <Col>
@@ -51,7 +32,7 @@ function ShowList() {
               </Col>
               <Col >
                 <h3>RS : {item.price}</h3>
-                <Button>Add To Cart</Button>
+                <Button onClick={() =>addToCartHandler(item,item.id) }>Add To Cart</Button>
               </Col>
             </div>
           );

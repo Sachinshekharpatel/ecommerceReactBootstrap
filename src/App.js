@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useContext } from 'react';
 import './App.css';
 import "./CartModal.css";
 import {Button} from 'react-bootstrap';
@@ -8,7 +8,12 @@ import Navbarheader from './Navbarheader';
 import AboutPage from './about';
 import HomePage from './Homepage';
 import CartModal from './cart';
+import CartContext from './createContext';
 function App() {
+ const cartCtx = useContext(CartContext);
+  useEffect(() => {
+    console.log(cartCtx.cartArray);
+  },[cartCtx.cartArray])
   return (
     <div className="App">
       <Navbarheader></Navbarheader>
