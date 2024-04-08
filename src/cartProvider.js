@@ -5,6 +5,7 @@ function CartProvider(props) {
     
     const [cartItem, setCartItem] = useState([]);
     const [apiData, setApiData] = useState([]);
+    const [loading, setLoading] = useState(true);
  const purchaseButtonHandler = () => {   
     setCartItem([]);
     alert('Item purchased Thankl you for shopping with us');
@@ -17,6 +18,7 @@ useEffect(() => {
        try {
         const response = await fetch('https://fakestoreapi.com/products');
         const data = await response.json();
+        setLoading(false);
          setApiData(data.slice(0,6).map((item) => {
             return {
                 id: item.id,
@@ -56,7 +58,8 @@ useEffect(() => {
         removeItemFromCart: (id) => {
             setCartItem(cartItem.filter((item) => item.id !== id));
         },
-        purchaseButton:purchaseButtonHandler
+        purchaseButton:purchaseButtonHandler,
+        loading:loading,
     }
 
     useEffect(() => {

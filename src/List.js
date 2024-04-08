@@ -1,5 +1,5 @@
 import React,{useContext, useEffect} from "react";
-import { Button, Col } from "react-bootstrap";
+import { Button, Col,Spinner } from "react-bootstrap";
 import  CartContext from "./createContext";
 import Navbarheader from "./Navbarheader";
 import FooterPart from "./thegeneric-footer";
@@ -19,9 +19,15 @@ function ShowList() {
     <Navbarheader></Navbarheader>
       <h1 className="text-center" style={{ fontStyle: "italic" }}>Music</h1>
       <div className="d-flex justify-content-center ">
-        {productList.listOfItem.map((item, index) => {
+        {productList.loading ? (
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
+          <Spinner animation="border" role="status">
+            <span className="sr-only"></span>
+          </Spinner>
+        </div>
+         ) : productList.listOfItem.map((item, index) => {
           return (
-            <div className="p-4">
+            <div key={index} className="p-4">
               <Col>
                 <h1>Album {index + 1}</h1>
                 <div className="zoom-out-on-hover">
@@ -42,7 +48,9 @@ function ShowList() {
         })}
         
       </div>
-      <Button  className='mt-4' variant='success' > See The Cart</Button>
+      <div className="d-flex justify-content-center">
+      <Button  variant="success" className="m-3 p-2 text-center" > See The Cart</Button>
+      </div>
       <FooterPart></FooterPart>
     </>
   );

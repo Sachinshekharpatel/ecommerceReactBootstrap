@@ -6,7 +6,7 @@ const AboutPage = () => {
   return (
     <>
       <Navbarheader></Navbarheader>
-      <h1 className="mt-3">About</h1>
+      <h1 className="mt-3 text-center">About</h1>
       <Container className="mt-5">
         <Row>
           <Col xs={12} md={3}>
