@@ -1,52 +1,43 @@
-import React, { useEffect,useContext } from "react";
+import React, { useEffect,useContext,useState } from "react";
 import CartContext from "./createContext";
 
 function CartProvider(props) {
     
-    const [cartItem, setCartItem] = React.useState([]);
-   
+    const [cartItem, setCartItem] = useState([]);
+    const [apiData, setApiData] = useState([]);
  const purchaseButtonHandler = () => {   
     setCartItem([]);
     alert('Item purchased Thankl you for shopping with us');
  }
 
+
+useEffect(() => {
+
+    async function fetchData(){
+       try {
+        const response = await fetch('https://fakestoreapi.com/products');
+        const data = await response.json();
+         setApiData(data.slice(0,6).map((item) => {
+            return {
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                description: item.description,
+                category: item.category,
+                image: item.image,
+                quantity: 1
+            }
+         }))
+       } catch (error) {
+         console.log(error);
+       }
+    }
+
+    fetchData()
+},[])
+
     const listofCart = {
-        listOfItem: [
-            {
-              title: "Colors",
-              price: 100,
-              id:1,
-              quantity:1,
-              imageUrl:
-                "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-            },
-            {
-              title: "Black and white Colors",
-              price: 50,
-              id:2,
-              quantity:1,
-              imageUrl:
-                "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-            },
-        
-            {
-              title: "Yellow and Black Colors",
-              price: 70,
-              id:3,
-              quantity:1,
-              imageUrl:
-                "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-            },
-        
-            {
-              title: "Blue Color",
-              price: 100,
-              quantity:1,
-              id:4,
-              imageUrl:
-                "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-            },
-          ],
+        listOfItem: apiData,
         cartArray: cartItem,
         addItemInCart: (item,id) => {
 

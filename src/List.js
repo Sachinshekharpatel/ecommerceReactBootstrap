@@ -1,5 +1,5 @@
 import React,{useContext, useEffect} from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col } from "react-bootstrap";
 import  CartContext from "./createContext";
 import Navbarheader from "./Navbarheader";
 import FooterPart from "./thegeneric-footer";
@@ -17,7 +17,7 @@ function ShowList() {
   return (
     <>
     <Navbarheader></Navbarheader>
-      <h1 className="text-align-center" style={{ fontStyle: "italic" }}>Music</h1>
+      <h1 className="text-center" style={{ fontStyle: "italic" }}>Music</h1>
       <div className="d-flex justify-content-center ">
         {productList.listOfItem.map((item, index) => {
           return (
@@ -32,7 +32,7 @@ function ShowList() {
                   />
                 </div>
               </Col>
-              <Col >
+              <Col className="text-center" >
                 <h3>RS : {item.price}</h3>
                 <Button onClick={() =>addToCartHandler(item,item.id) }>Add To Cart</Button>
               </Col>
