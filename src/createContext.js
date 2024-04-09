@@ -6,6 +6,7 @@ const CartContext = React.createContext({
     cartArray:[],
     addItemInCart: (item) => {},
     removeItemFromCart: () => {},
+    cancelRetry: () => {},
 });
 
 
