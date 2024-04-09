@@ -7,6 +7,7 @@ const CartContext = React.createContext({
     addItemInCart: (item) => {},
     removeItemFromCart: () => {},
     cancelRetry: () => {},
+    addMovieToApihandler: () => {},
 });
 
 
