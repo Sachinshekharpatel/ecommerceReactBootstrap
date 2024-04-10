@@ -6,6 +6,7 @@ function CartProvider(props) {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+ const [productDetail,setProductDetail] = useState([]);
   const purchaseButtonHandler = () => {
     setCartItem([]);
     alert("Item purchased Thank you for shopping with us");
@@ -118,6 +119,11 @@ function CartProvider(props) {
     loading: loading,
     errorMessage: errorMessage,
     cancelRetry: cancelRetry,
+    itemDetailForProductDetail: productDetail,
+    openProductDetailPage: (item) => {
+      const array = [item]
+      setProductDetail(array);
+    }
   };
 
   useEffect(() => {

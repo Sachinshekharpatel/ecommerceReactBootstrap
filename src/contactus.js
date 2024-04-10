@@ -12,7 +12,7 @@ const ContactUs = () => {
       const name = nameRef.current.value;
       const phone = phoneRef.current.value;
       const email = emailRef.current.value;
-      if( name === "" ||  phone === "" ||  email === "" ){
+      if( name === "" ||  phone === "" ||  email === "" || email.includes("@") === false) {
         alert("Please enter valid data");
         return;
       }

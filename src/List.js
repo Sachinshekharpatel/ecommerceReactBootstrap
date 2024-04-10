@@ -1,11 +1,13 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useParams , useContext, useRef, useEffect } from "react";
 import { Button, Col, Spinner, Form } from "react-bootstrap";
 import CartContext from "./createContext";
 import Navbarheader from "./Navbarheader";
 import FooterPart from "./thegeneric-footer";
+import {Link,RouterProvider, createBrowserRouter} from 'react-router-dom';
+import ProductDetail from './productDetail';
 function ShowList() {
+  
   const productList = useContext(CartContext);
-
   const titleRef = useRef();
   const OpeningTextRef = useRef();
   const ReleaseDateRef = useRef();
@@ -13,6 +15,7 @@ function ShowList() {
 
   useEffect(() => {
     console.log(productList.listOfItem);
+    
   }, [productList, productList.loading]);
 
   const addToCartHandler = (item, id) => {
@@ -55,7 +58,20 @@ function ShowList() {
 
   const deleteMovieHandler = (id) => {
     productList.removeMovieFromList(id);
+  };
+
+  const openProductDetailPage = (item) => {
+    productList.openProductDetailPage(item); 
+
   }
+
+  // const navigation = createBrowserRouter([
+  //   {
+  //     path: "/productdetail/:id",
+  //     element: <ProductDetail></ProductDetail>,
+  //   },
+  // ]);
+
   return (
     <>
       <Navbarheader></Navbarheader>
@@ -100,7 +116,7 @@ function ShowList() {
               className="text-align-center"
               type="submit"
             >
-              Add Movie
+              Add Product
             </Button>
           </div>
         </Form>
@@ -128,12 +144,14 @@ function ShowList() {
         ) : (
           productList.listOfItem.map((item, index) => {
             return (
-              <div key={index} className="p-4">
+              <div onClick={() => openProductDetailPage(item)} key={index} className="p-4">
+                <Link to="/productdetail">
                 <Col>
-                  <h1>Album {index + 1}</h1>
-                  <div className="zoom-out-on-hover">
+                  <h1>Product {index + 1}</h1>
+                  <div className="text-center zoom-out-on-hover">
                     <img
-                      src={item.imageUrl}
+                      style={{ height: "110px", width: "150px" }}
+                      src={item.image}
                       alt="Music album"
                       className="img-fluid hover-zoom"
                     />
@@ -144,8 +162,15 @@ function ShowList() {
                   <Button onClick={() => addToCartHandler(item, item.id)}>
                     Add To Cart
                   </Button>
-                  <Button variant="danger" className="m-3 p-2 text-center" onClick={()=>deleteMovieHandler(item.id)}>Delete</Button>
+                  <Button
+                    variant="danger"
+                    className="m-3 p-2 text-center"
+                    onClick={() => deleteMovieHandler(item.id)}
+                  >
+                    Delete
+                  </Button>
                 </Col>
+                </Link>
               </div>
             );
           })

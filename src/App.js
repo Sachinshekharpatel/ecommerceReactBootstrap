@@ -1,16 +1,13 @@
 import React, { useEffect,useContext } from 'react';
 import './App.css';
 import "./CartModal.css";
-import {Button} from 'react-bootstrap';
 import ShowList from './List';
-import FooterPart from './thegeneric-footer';
-import Navbarheader from './Navbarheader';
 import AboutPage from './about';
 import HomePage from './Homepage';
-import CartModal from './cart';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 import CartContext from './createContext';
 import ContactUs from './contactus';
+import ProductDetail from './productDetail';
 function App() {
 
 const navigation = createBrowserRouter([
@@ -29,6 +26,10 @@ const navigation = createBrowserRouter([
   {
     path: "contactus",
     element: <ContactUs></ContactUs>,
+  },
+  {
+    path: "/productdetail",
+    element: <ProductDetail></ProductDetail>,
   },
 
 ])
