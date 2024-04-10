@@ -10,6 +10,7 @@ import HomePage from './Homepage';
 import CartModal from './cart';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 import CartContext from './createContext';
+import ContactUs from './contactus';
 function App() {
 
 const navigation = createBrowserRouter([
@@ -24,6 +25,10 @@ const navigation = createBrowserRouter([
   {
     path: "homepage",
     element: <HomePage></HomePage>,
+  },
+  {
+    path: "contactus",
+    element: <ContactUs></ContactUs>,
   },
 
 ])

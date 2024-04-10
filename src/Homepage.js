@@ -54,7 +54,7 @@ const HomePage = () => {
 
         {array.map((item)=>{
           return(
-            <div className="d-flex p-3 justify-content-between mb-3 border-bottom border-dark">
+            <div key={item.date} className="d-flex p-3 justify-content-between mb-3 border-bottom border-dark">
                 <h1 >{item.date}</h1>
                 <h1 style={{color:'grey'}}>{item.place}</h1>
                 <h1 style={{color:'grey'}}>{item.about}</h1>

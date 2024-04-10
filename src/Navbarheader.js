@@ -47,14 +47,16 @@ const Navbarheader = () => {
       <Navbar expand="lg" bg="dark" variant="dark" fixed="top">
         <Container>
           <Navbar.Brand>
-            
-            <Link to="/">Store</Link>
-          </Navbar.Brand>
-          <Navbar.Brand>
             <Link to="/homepage">Home</Link>
           </Navbar.Brand>
           <Navbar.Brand>
+            <Link to="/">Store</Link>
+          </Navbar.Brand>
+          <Navbar.Brand>
             <Link to="/aboutpage">About</Link>
+          </Navbar.Brand>
+          <Navbar.Brand>
+            <Link to="/contactus">Contact US</Link>
           </Navbar.Brand>
           <Button
             onClick={() => {
