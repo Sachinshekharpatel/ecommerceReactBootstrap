@@ -17,20 +17,40 @@ const ProductDetail = () => {
         <h1 className="text-center mb-4">Product Details</h1>
         <div className="row justify-content-center">
           {itemToBeDisplayed.map((item) => (
-            <div className="col-md-6 mb-4 justify-content-center text-center d-flex" key={item.id}>
+            <div
+              className="col-md-6 mb-4 justify-content-center text-center d-flex"
+              key={item.id}
+            >
               <div className="card text-align-center p-3 ">
-                <img
-                  style={{paddingLeft:'60px',paddingRight:'60px', height: "200px", width: "auto",textAlign:'center' }}
-                  src={item.image}
-                  className="card-img-top"
-                  alt={item.title}
-                />
+                <div className="image-container">
+                  <img
+                    style={{
+                      paddingTop: "20px",
+                      paddingBottom: "20px",
+                      paddingLeft: "60px",
+                      paddingRight: "60px",
+                      height: "200px",
+                      width: "auto",
+                      textAlign: "center",
+                      transition: "transform 0.3s", // Add transition property
+                    }}
+                    src={item.image}
+                    className="card-img-top"
+                    alt={item.title}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.2)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }
+                  />
+                </div>
                 <div className="card-body">
-                  <h5 className="card-title">{item.title}</h5>
-                  <p className="card-text">{item.description}</p>
-                  <p className="card-text font-weight-bold">
+                  <h4 className="card-title">{item.title}</h4>
+                  <p className="card-text" style={{color:'grey'}}>{item.description}</p>
+                  <h3 className="card-text font-weight-bold">
                     Price: ${item.price}
-                  </p>
+                  </h3>
                 </div>
               </div>
             </div>
@@ -42,10 +62,9 @@ const ProductDetail = () => {
           <>
             <div className="text-center">
               <Button variant="success" className="m-3 p-2 text-center ">
-
-              {" "}
-              Add To The Cart
-            </Button>
+                {" "}
+                Add To The Cart
+              </Button>
             </div>
             <div className="row mt-5">
               <div className="col-md-6 offset-md-3">
