@@ -35,6 +35,7 @@ const Navbarheader = () => {
     setCart(false);
     cartCtx.purchaseButton();
   };
+  
   return (
     <>
       {cart && (
@@ -47,26 +48,30 @@ const Navbarheader = () => {
       <Navbar expand="lg" bg="dark" variant="dark" fixed="top">
         <Container>
           <Navbar.Brand>
-            <Link to="/homepage">Home</Link>
+            <Link to="/homepage" className="navbar-brand">Home</Link>
           </Navbar.Brand>
           <Navbar.Brand>
-            <Link to="/">Store</Link>
+            <Link to="/" className="navbar-brand">Store</Link>
           </Navbar.Brand>
           <Navbar.Brand>
-            <Link to="/aboutpage">About</Link>
+            <Link to="/aboutpage" className="navbar-brand">About</Link>
           </Navbar.Brand>
           <Navbar.Brand>
-            <Link to="/contactus">Contact US</Link>
+            <Link to="/contactus" className="navbar-brand">Contact US</Link>
+          </Navbar.Brand>
+          <Navbar.Brand>
+            <Link to="/login" className="navbar-brand">login</Link>
           </Navbar.Brand>
           <Button
             onClick={() => {
               cartOpenhandler();
             }}
-            style={{ marginLeft: "50px" }}
+            style={{ marginLeft: "auto" ,marginRight:'10px'}}
+            className="ml-3 "
           >
             Cart
           </Button>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand className="ml-3">
             Total Product In cart: {totalCartItem}
           </Navbar.Brand>
         </Container>

@@ -2,11 +2,14 @@ import React, { useEffect, useContext, useState } from "react";
 import CartContext from "./createContext";
 
 function CartProvider(props) {
+ 
   const [cartItem, setCartItem] = useState([]);
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
  const [productDetail,setProductDetail] = useState([]);
+ const idTokenInLocalStorage = localStorage.getItem("idToken") || null;
+ const [idToken ,setIdToken] = useState(idTokenInLocalStorage);
   const purchaseButtonHandler = () => {
     setCartItem([]);
     alert("Item purchased Thank you for shopping with us");
@@ -123,6 +126,13 @@ function CartProvider(props) {
     openProductDetailPage: (item) => {
       const array = [item]
       setProductDetail(array);
+    },
+    idToken : idToken,
+    authLoginHandler: (idToken) => {
+      setIdToken(idToken);
+      console.log("idToken", idToken,'inside Authctxlofg=ginhandler');
+      localStorage.setItem("idToken", idToken);
+      
     }
   };
 

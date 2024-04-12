@@ -32,7 +32,7 @@ const CartModal = (props) => {
                     <tr key={index}>
                       <td>
                         <img
-                          src={item.imageUrl}
+                          src={item.image}
                           style={{ width: "30px", height: "30px" }}
                           alt={item.title}
                         />

@@ -8,9 +8,10 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 import CartContext from './createContext';
 import ContactUs from './contactus';
 import ProductDetail from './productDetail';
+import LoginPage from './loginpage';
 function App() {
-
-const navigation = createBrowserRouter([
+ 
+ const navigation = createBrowserRouter([
   {
     path: "/",
     element: <ShowList></ShowList>,
@@ -28,16 +29,21 @@ const navigation = createBrowserRouter([
     element: <ContactUs></ContactUs>,
   },
   {
-    path: "/productdetail",
+    path: "/:id",
     element: <ProductDetail></ProductDetail>,
+  },
+  {
+    path: "login",
+    element: <LoginPage></LoginPage>,
   },
 
 ])
 
  const cartCtx = useContext(CartContext);
   useEffect(() => {
+    console.log(cartCtx.idToken);
     console.log(cartCtx.cartArray);
-  },[cartCtx.cartArray])
+  },[cartCtx.cartArray,cartCtx.idToken])
   return (
 
     <RouterProvider router={navigation}>

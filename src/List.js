@@ -1,12 +1,13 @@
-import React, { useParams , useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import { Button, Col, Spinner, Form } from "react-bootstrap";
 import CartContext from "./createContext";
 import Navbarheader from "./Navbarheader";
 import FooterPart from "./thegeneric-footer";
-import {Link,RouterProvider, createBrowserRouter} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import ProductDetail from './productDetail';
 function ShowList() {
-  
+  const navigate = useNavigate();
+  const cartCtx =  useContext(CartContext);
   const productList = useContext(CartContext);
   const titleRef = useRef();
   const OpeningTextRef = useRef();
@@ -15,7 +16,9 @@ function ShowList() {
 
   useEffect(() => {
     console.log(productList.listOfItem);
-    
+     if(cartCtx.idToken===null){
+      navigate("/login");
+     }
   }, [productList, productList.loading]);
 
   const addToCartHandler = (item, id) => {
@@ -65,12 +68,6 @@ function ShowList() {
 
   }
 
-  // const navigation = createBrowserRouter([
-  //   {
-  //     path: "/productdetail/:id",
-  //     element: <ProductDetail></ProductDetail>,
-  //   },
-  // ]);
 
   return (
     <>
@@ -145,16 +142,18 @@ function ShowList() {
           productList.listOfItem.map((item, index) => {
             return (
               <div onClick={() => openProductDetailPage(item)} key={index} className="p-4">
-                <Link to="/productdetail">
+               
                 <Col>
                   <h1>Product {index + 1}</h1>
                   <div className="text-center zoom-out-on-hover">
+                  <Link to={`/${item.id}`}>
                     <img
                       style={{ height: "110px", width: "150px" }}
                       src={item.image}
                       alt="Music album"
                       className="img-fluid hover-zoom"
                     />
+                   </Link>
                   </div>
                 </Col>
                 <Col className="text-center">
@@ -170,7 +169,7 @@ function ShowList() {
                     Delete
                   </Button>
                 </Col>
-                </Link>
+               
               </div>
             );
           })
