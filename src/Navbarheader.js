@@ -35,7 +35,7 @@ const Navbarheader = () => {
     setCart(false);
     cartCtx.purchaseButton();
   };
-  
+
   return (
     <>
       {cart && (
@@ -48,25 +48,51 @@ const Navbarheader = () => {
       <Navbar expand="lg" bg="dark" variant="dark" fixed="top">
         <Container>
           <Navbar.Brand>
-            <Link to="/homepage" className="navbar-brand">Home</Link>
+            <Link to="/homepage" className="navbar-brand">
+              Home
+            </Link>
           </Navbar.Brand>
           <Navbar.Brand>
-            <Link to="/" className="navbar-brand">Store</Link>
+            <Link to="/" className="navbar-brand">
+              Store
+            </Link>
           </Navbar.Brand>
           <Navbar.Brand>
-            <Link to="/aboutpage" className="navbar-brand">About</Link>
+            <Link to="/aboutpage" className="navbar-brand">
+              About
+            </Link>
           </Navbar.Brand>
           <Navbar.Brand>
-            <Link to="/contactus" className="navbar-brand">Contact US</Link>
+            <Link to="/contactus" className="navbar-brand">
+              Contact US
+            </Link>
           </Navbar.Brand>
-          <Navbar.Brand>
-            <Link to="/login" className="navbar-brand">login</Link>
+          {cartCtx.idToken === null && (
+            <Navbar.Brand>
+              <Link to="/login" className="navbar-brand">
+                <Button>Login</Button>
+              </Link>
+            </Navbar.Brand>
+          )}
+          {cartCtx.idToken !==null && (
+            <Navbar.Brand>
+            <Link to="/login" className="navbar-brand">
+              <Button
+                variant="danger"
+                onClick={() => {
+                  cartCtx.authLogoutHandler();
+                }}
+              >
+                Logout
+              </Button>
+            </Link>
           </Navbar.Brand>
+          )}
           <Button
             onClick={() => {
               cartOpenhandler();
             }}
-            style={{ marginLeft: "auto" ,marginRight:'10px'}}
+            style={{ marginLeft: "auto", marginRight: "10px" }}
             className="ml-3 "
           >
             Cart

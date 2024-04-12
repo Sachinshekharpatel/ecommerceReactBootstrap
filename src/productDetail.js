@@ -61,7 +61,7 @@ const ProductDetail = () => {
         ) : (
           <>
             <div className="text-center">
-              <Button variant="success" className="m-3 p-2 text-center ">
+              <Button variant="success" onClick={() => cartCtx.addItemInCart(itemToBeDisplayed[0], itemToBeDisplayed[0].id)} className="m-3 p-2 text-center ">
                 {" "}
                 Add To The Cart
               </Button>

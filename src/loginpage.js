@@ -13,7 +13,7 @@ const LoginPage = ()=> {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     console.log("Login button clicked");
-    let url =
+    let url = 
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBFjPtZRv42asMyN8Ts4xm18_mYVEaJACA";
       fetch(url, {
         method: "POST",
@@ -38,7 +38,9 @@ const LoginPage = ()=> {
           }
       }).then((data) => {
         console.log(data);
-        cartCtx.authLoginHandler(data.idToken);
+        let email = data.email;
+        email = email.replace(/[@.]/g, '');
+        cartCtx.authLoginHandler(data.idToken,email);
         history("/");
         //here AUTHENTICATION IS SUCCESSFULLY DONE IF WE NEED TO WRITE LOG IN CONTEXT API
       })

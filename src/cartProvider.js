@@ -2,14 +2,14 @@ import React, { useEffect, useContext, useState } from "react";
 import CartContext from "./createContext";
 
 function CartProvider(props) {
- 
+  const [emailId, setEmailId] = useState("");
   const [cartItem, setCartItem] = useState([]);
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
- const [productDetail,setProductDetail] = useState([]);
- const idTokenInLocalStorage = localStorage.getItem("idToken") || null;
- const [idToken ,setIdToken] = useState(idTokenInLocalStorage);
+  const [productDetail, setProductDetail] = useState([]);
+  const idTokenInLocalStorage = localStorage.getItem("idToken") || null;
+  const [idToken, setIdToken] = useState(idTokenInLocalStorage);
   const purchaseButtonHandler = () => {
     setCartItem([]);
     alert("Item purchased Thank you for shopping with us");
@@ -60,8 +60,8 @@ function CartProvider(props) {
     listOfItem: apiData,
     cartArray: cartItem,
     addMovieToApi: (movieDetails) => {
-        console.log('added movie', JSON.stringify(movieDetails))
-        const movie = JSON.stringify(movieDetails)
+      console.log("added movie", JSON.stringify(movieDetails));
+      const movie = JSON.stringify(movieDetails);
       const fetchnewMovie = async () => {
         try {
           const response = await fetch("https://fakestoreapi.com/products", {
@@ -75,12 +75,15 @@ function CartProvider(props) {
             throw new Error("Something went wrong");
           }
           const data = await response.json();
-          const  data1 = {...data,quantity:1}
+          const data1 = { ...data, quantity: 1 };
           console.log(data1);
           setApiData([...apiData, data1]);
         } catch (error) {}
       };
       fetchnewMovie();
+    },
+    removeItemFromCartHandler: (id) => {
+      setCartItem(cartItem.filter((item) => item.id !== id));
     },
     addItemInCart: (item, id) => {
       if (cartItem.length === 0) {
@@ -98,22 +101,25 @@ function CartProvider(props) {
       }
     },
     removeMovieFromList: (idToDelete) => {
-        const deleteMovie = async (idToDelete) => {
-            try {
-              const response = await fetch(`https://fakestoreapi.com/products/${idToDelete}`, {
-                method: "DELETE",
-              });
-              if (!response.ok) {
-                throw new Error("Failed to delete movie");
-              }
-              console.log("Movie deleted successfully");
-              setApiData(apiData.filter((movie) => movie.id !== idToDelete));
-            } catch (error) {
-              console.error("Error deleting movie:", error);
+      const deleteMovie = async (idToDelete) => {
+        try {
+          const response = await fetch(
+            `https://fakestoreapi.com/products/${idToDelete}`,
+            {
+              method: "DELETE",
             }
-          };
-          
-          deleteMovie(idToDelete);
+          );
+          if (!response.ok) {
+            throw new Error("Failed to delete movie");
+          }
+          console.log("Movie deleted successfully");
+          setApiData(apiData.filter((movie) => movie.id !== idToDelete));
+        } catch (error) {
+          console.error("Error deleting movie:", error);
+        }
+      };
+
+      deleteMovie(idToDelete);
     },
     removeItemFromCart: (id) => {
       setCartItem(cartItem.filter((item) => item.id !== id));
@@ -124,16 +130,40 @@ function CartProvider(props) {
     cancelRetry: cancelRetry,
     itemDetailForProductDetail: productDetail,
     openProductDetailPage: (item) => {
-      const array = [item]
+      const array = [item];
       setProductDetail(array);
     },
-    idToken : idToken,
-    authLoginHandler: (idToken) => {
+    idToken: idToken,
+    emailID: emailId,
+    authLoginHandler: async (idToken, email) => {
       setIdToken(idToken);
-      console.log("idToken", idToken,'inside Authctxlofg=ginhandler');
+      console.log("idToken", idToken, "inside Authctxlofg=ginhandler");
       localStorage.setItem("idToken", idToken);
-      
-    }
+      setEmailId(email);
+
+      let url = `https://crudcrud.com/api/27cec75a824843b9827e0706d93fab57/carts${email}`;
+
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data);
+        setCartItem(data);
+      } catch (error) {}
+    },
+    authLogoutHandler: () => {
+      setIdToken(null);
+      localStorage.removeItem("idToken");
+      setCartItem([]);
+      setEmailId("");
+    },
   };
 
   useEffect(() => {

@@ -3,11 +3,11 @@ import { Button, Col, Spinner, Form } from "react-bootstrap";
 import CartContext from "./createContext";
 import Navbarheader from "./Navbarheader";
 import FooterPart from "./thegeneric-footer";
-import {Link, useNavigate} from 'react-router-dom';
-import ProductDetail from './productDetail';
+import { Link, useNavigate } from "react-router-dom";
+
 function ShowList() {
   const navigate = useNavigate();
-  const cartCtx =  useContext(CartContext);
+  const cartCtx = useContext(CartContext);
   const productList = useContext(CartContext);
   const titleRef = useRef();
   const OpeningTextRef = useRef();
@@ -16,13 +16,43 @@ function ShowList() {
 
   useEffect(() => {
     console.log(productList.listOfItem);
-     if(cartCtx.idToken===null){
+    if (cartCtx.idToken === null) {
       navigate("/login");
-     }
+    }
   }, [productList, productList.loading]);
 
-  const addToCartHandler = (item, id) => {
+  const addToCartHandler = async (item, id) => {
     productList.addItemInCart(item, id);
+    let email = cartCtx.emailID;
+    email = email.replace(/[@.]/g, '');
+    // a36e74755e434a5b9f09297beabb5abe if want new api go to browser consle//application/storage/clearsitedata/reload page
+    let url = `https://crudcrud.com/api/27cec75a824843b9827e0706d93fab57/carts${email}`;
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: item.id,
+          category: item.category,
+          title: item.title,
+          description: item.description,
+          releaseDate: item.releaseDate,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data:", data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const cancelRetryHandler = () => {
@@ -64,10 +94,8 @@ function ShowList() {
   };
 
   const openProductDetailPage = (item) => {
-    productList.openProductDetailPage(item); 
-
-  }
-
+    productList.openProductDetailPage(item);
+  };
 
   return (
     <>
@@ -141,19 +169,22 @@ function ShowList() {
         ) : (
           productList.listOfItem.map((item, index) => {
             return (
-              <div onClick={() => openProductDetailPage(item)} key={index} className="p-4">
-               
+              <div
+                onClick={() => openProductDetailPage(item)}
+                key={index}
+                className="p-4"
+              >
                 <Col>
                   <h1>Product {index + 1}</h1>
                   <div className="text-center zoom-out-on-hover">
-                  <Link to={`/${item.id}`}>
-                    <img
-                      style={{ height: "110px", width: "150px" }}
-                      src={item.image}
-                      alt="Music album"
-                      className="img-fluid hover-zoom"
-                    />
-                   </Link>
+                    <Link to={`/${item.id}`}>
+                      <img
+                        style={{ height: "110px", width: "150px" }}
+                        src={item.image}
+                        alt="Music album"
+                        className="img-fluid hover-zoom"
+                      />
+                    </Link>
                   </div>
                 </Col>
                 <Col className="text-center">
@@ -169,7 +200,6 @@ function ShowList() {
                     Delete
                   </Button>
                 </Col>
-               
               </div>
             );
           })

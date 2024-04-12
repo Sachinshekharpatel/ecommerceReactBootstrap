@@ -1,10 +1,10 @@
 import React,{useContext, useEffect} from "react";
 import { Button, Table } from "react-bootstrap";
 import "./CartModal.css"; 
-
+import CartContext from "./createContext";
 
 const CartModal = (props) => {
-
+  const cartCtx = useContext(CartContext);
   const cartArrayCtx = props.cartArray;
 
    useEffect(() => {
@@ -13,7 +13,7 @@ const CartModal = (props) => {
 
   return (
     <>   
-    <pre>{ console.log(cartArrayCtx)}</pre>
+    
       <div className="modal-overlay" onClick={props.cartClosehandler}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <div className="modal-header">
@@ -41,7 +41,7 @@ const CartModal = (props) => {
                       <td>{item.price}</td>
                       <td>
                         {item.quantity}
-                        <Button variant="danger" className="ms-4">
+                        <Button onClick={() => cartCtx.removeItemFromCartHandler(item.id)} variant="danger" className="ms-4">
                           Remove
                         </Button>
                       </td>
